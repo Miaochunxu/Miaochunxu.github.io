@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Docker入坑指南]]></title>
+    <url>%2F2018%2F12%2F10%2FDocker%E5%85%A5%E5%9D%91%E6%8C%87%E5%8D%97%2F</url>
+    <content type="text"><![CDATA[this is docker action]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[命令行]]></title>
+    <url>%2F2018%2F12%2F10%2F%E5%91%BD%E4%BB%A4%E8%A1%8C%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>服务器骚操作</category>
+      </categories>
+      <tags>
+        <tag>bash</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[koa2入门使用]]></title>
+    <url>%2F2018%2F12%2F10%2Fkoa2%E6%85%A2%E6%85%A2%E5%AD%A6%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>后端那些事</category>
+      </categories>
+      <tags>
+        <tag>nodejs</tag>
+        <tag>koa2</tag>
+        <tag>restful api</tag>
+      </tags>
+  </entry>
+</search>
