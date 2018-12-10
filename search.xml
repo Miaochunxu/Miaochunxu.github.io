@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[github-cname-操作]]></title>
+    <url>%2F2018%2F12%2F10%2Fgithub-cname-%E6%93%8D%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[github(hexo &amp;&amp; next theme) 设置cname 假设 github 博客的访问地址是：https://a.github.io 域名是：a.comgithub 操作 1、创建CNAME文件，注：文件必须是全大写12$ touch CNAME$ vi CNAME 2、写入:1a.com 3、提交代码并设置https1setting =&gt; GitHub Pages 下的 Enforce HTTPS 强制使用https协议 域名解析提供商(阿里云) 操作]]></content>
+      <categories>
+        <category>Github呦呦</category>
+      </categories>
+      <tags>
+        <tag>github-cname</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Docker入坑指南]]></title>
     <url>%2F2018%2F12%2F10%2FDocker%E5%85%A5%E5%9D%91%E6%8C%87%E5%8D%97%2F</url>
     <content type="text"><![CDATA[this is docker action]]></content>
