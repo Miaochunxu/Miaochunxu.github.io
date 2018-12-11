@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Docker那些坑的解决办法记录]]></title>
+    <url>%2F2018%2F12%2F11%2FDocker%E9%82%A3%E4%BA%9B%E5%9D%91%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[docker下 centos 使用 systemctl 命令 解决办法加上 –privileged=true 和init(/usr/sbin/init)1docker run -d --name centos7 -p 8090:80 --privileged=true centos_nginx:1.0 /usr/sbin/init]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>docker-systemctl</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Markdown常用语法]]></title>
     <url>%2F2018%2F12%2F11%2FMarkdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%2F</url>
     <content type="text"><![CDATA[标题#数量 1～6 代表一级到6级标题 1# 这是一级标题 文字相关 强调 123*斜体***加粗*****加粗斜体*** 注：都不带空格 字号 123456&lt;small&gt;&lt;small&gt;小小号&lt;/small&gt;&lt;/small&gt;&lt;small&gt;小号&lt;/small&gt;正常&lt;big&gt;大号&lt;/big&gt;&lt;big&gt;&lt;big&gt;大大号&lt;/big&gt;&lt;/big&gt;&lt;big&gt;... 小小号小号正常 大号大大号 颜色 12&lt;font color=&quot;#d9534f&quot;&gt;d9534f&lt;/font&gt;&lt;font color=&quot;red&quot;&gt;red&lt;/font&gt; d9534f red 列表123*、-、+ 任意一个效果相同(无序)1 2 3 数字为有序列表 分隔符1*** 或 --- 中划线与下划线12~~中划线~~&lt;u&gt;下划线&lt;/u&gt; 行内元素1`这是行内元素` start 这是行内元素 end 表格1234姓名|性别|年龄|爱好:---:|:---:|:--:|:---: // 在其上方是表头 :==,:==:,==: 左对齐,居中,右对齐Steve|男|8|篮球Steven|女|20|足球 姓名 性别 年龄 爱好 Steve 男 8 篮球 Steven 女 20 足球 文字上下标注12上标&lt;sup&gt;上标&lt;/sup&gt;下标&lt;sub&gt;下标&lt;/sub&gt; 上标 上标 下标 下标 勾选12- [ ] 未勾选- [x] 勾选 注：x 是字母x 未勾选 勾选]]></content>
@@ -34,14 +45,14 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Docker入坑指南]]></title>
-    <url>%2F2018%2F12%2F10%2FDocker%E5%85%A5%E5%9D%91%E6%8C%87%E5%8D%97%2F</url>
-    <content type="text"><![CDATA[this is docker action]]></content>
+    <title><![CDATA[Docker入坑基本]]></title>
+    <url>%2F2018%2F12%2F10%2FDocker%E5%85%A5%E5%9D%91%E5%9F%BA%E6%9C%AC%2F</url>
+    <content type="text"><![CDATA[Docker build1docker build -t [image:version] . 说明，如果要上传到docker-hub, image名字最好带上用户名，比如docker build -t miaochunxu/centos_nginx:1.0 .方便docker push,其中的. 代表dockerfile就在当前目录 docker push提交到docker hub 1docker push miaochunxu/centos_nginx:1.0 如果build的时候没有带上用户名，则需要打tag 1docker tag centos_nginx:1.0 miaochuxnu/centos_nginx:1.0 然后再push]]></content>
       <categories>
         <category>Docker</category>
       </categories>
       <tags>
-        <tag>docker</tag>
+        <tag>docker基本操作</tag>
       </tags>
   </entry>
   <entry>
