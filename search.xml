@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Markdown常用语法]]></title>
+    <url>%2F2018%2F12%2F11%2FMarkdown%E5%B8%B8%E7%94%A8%E8%AF%AD%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[标题#数量 1～6 代表一级到6级标题 1# 这是一级标题 文字相关 强调 123*斜体***加粗*****加粗斜体*** 注：都不带空格 字号 123456&lt;small&gt;&lt;small&gt;小小号&lt;/small&gt;&lt;/small&gt;&lt;small&gt;小号&lt;/small&gt;正常&lt;big&gt;大号&lt;/big&gt;&lt;big&gt;&lt;big&gt;大大号&lt;/big&gt;&lt;/big&gt;&lt;big&gt;... 小小号小号正常 大号大大号 颜色 12&lt;font color=&quot;#d9534f&quot;&gt;d9534f&lt;/font&gt;&lt;font color=&quot;red&quot;&gt;red&lt;/font&gt; d9534f red 列表123*、-、+ 任意一个效果相同(无序)1 2 3 数字为有序列表 分隔符1*** 或 --- 中划线与下划线12~~中划线~~&lt;u&gt;下划线&lt;/u&gt; 行内元素1`这是行内元素` start 这是行内元素 end 表格1234姓名|性别|年龄|爱好:---:|:---:|:--:|:---: // 在其上方是表头 :==,:==:,==: 左对齐,居中,右对齐Steve|男|8|篮球Steven|女|20|足球 姓名 性别 年龄 爱好 Steve 男 8 篮球 Steven 女 20 足球 文字上下标注12上标&lt;sup&gt;上标&lt;/sup&gt;下标&lt;sub&gt;下标&lt;/sub&gt; 上标 上标 下标 下标 勾选12- [ ] 未勾选- [x] 勾选 注：x 是字母x 未勾选 勾选]]></content>
+      <categories>
+        <category>能上天的工具集</category>
+      </categories>
+      <tags>
+        <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[imageMagick图片处理]]></title>
+    <url>%2F2018%2F12%2F11%2FimageMagick%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%2F</url>
+    <content type="text"><![CDATA[mac上安装 imageMagick通过brew方式 1$ brew install imagemagick 修改图片质量(大小)把a.jpg 缩小质量为 70 生成新的 b.jpg 1$ convert -quality 70 -strip a.jpg b.jpg -strip 为删除一些图片自带的配置信息，进一步减小图片大小 修改图片尺寸1、a.jpg 尺寸为 500x500 将a.jpg 修改成 100x100 的尺寸 1$ convert -resize 100x100 a.jpg b.jpg 2、强制转换图片尺寸：1$ convert -resize '100x100!' a.jpg b.jpg 3、图片尺寸判断：图片尺寸全部 大于/小于 设置的尺寸才会进行操作12$ convert -resize '100x100&gt;' a.jpg b.jpg$ convert -resize '100x100&lt;' a.jpg b.jpg 注：100x100 中的是字母 x 不是 *]]></content>
+      <categories>
+        <category>能上天的工具集</category>
+      </categories>
+      <tags>
+        <tag>imageMagick</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[github-cname-操作]]></title>
     <url>%2F2018%2F12%2F10%2Fgithub-cname-%E6%93%8D%E4%BD%9C%2F</url>
     <content type="text"><![CDATA[github(hexo &amp;&amp; next theme) 设置cname 假设 github 博客的访问地址是：https://a.github.io 域名是：a.comgithub 操作 1、创建CNAME文件，注：文件必须是全大写12$ touch CNAME$ vi CNAME 2、写入:1a.com 3、提交代码并设置https1setting =&gt; GitHub Pages 下的 Enforce HTTPS 强制使用https协议 域名解析提供商(阿里云) 操作]]></content>
