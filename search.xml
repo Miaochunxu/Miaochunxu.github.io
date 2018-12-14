@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[VirtualBox+vagrant]]></title>
+    <url>%2F2018%2F12%2F14%2FVirtualBox-vagrant%2F</url>
+    <content type="text"><![CDATA[使用vagrant管理与操作VirtualBox VirtualBox 与 vagrant 的安装为前提，官网下载安装包或者brew安装都可 基本命令123456vagrant initvagrant upvagrant haltvagrant destroyvagrant boxvagrant plugin vagrant-scp 安装拷贝宿主机文件到虚拟机内部，可以使用vagrant插件来实现scp 安装 1vagrant plugin install vagrant-scp 使用 1vagrant scp &lt;location_file_url&gt; [vm_name]:&lt;vm_url&gt;]]></content>
+      <categories>
+        <category>虚拟机</category>
+      </categories>
+      <tags>
+        <tag>VirtualBox</tag>
+        <tag>vagrant</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Docker那些坑的解决办法记录]]></title>
     <url>%2F2018%2F12%2F11%2FDocker%E9%82%A3%E4%BA%9B%E5%9D%91%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%E8%AE%B0%E5%BD%95%2F</url>
     <content type="text"><![CDATA[docker下 centos 使用 systemctl 命令 解决办法加上 –privileged=true 和init(/usr/sbin/init)1docker run -d --name centos7 -p 8090:80 --privileged=true centos_nginx:1.0 /usr/sbin/init]]></content>
