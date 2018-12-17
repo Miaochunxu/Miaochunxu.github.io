@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[centos相关操作]]></title>
+    <url>%2F2018%2F12%2F17%2F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%93%8D%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[系统相关查看系统版本centos1cat /etc/redhat-release SELinux安全增强型 Linux SELinux作用SELinux 限制服务进程对资源的访问 SELinux模式(强制/宽容/关闭)12345enforcing: 强制模式。违反 SELinux 规则的行为将被阻止并记录到日志中。permissive: 宽容模式。违反 SELinux 规则的行为只会记录到日志中。一般为调试用。disabled: 关闭 SELinux。 修改模式方法123$ vi /etc/selinux/config修改 SELINUX=enforcing 为相应的模式，重启服务器生效 安全机制(文件/进程)格式：system_u:object_r:net_conf_t:s0 &nbsp; 用户(User) 角色(Role) 类型(Type) 级别(Level) 文件相关 system_u: 系统创建的文件 unconfined_u: 用户创建的文件 object_r: 代表文件 system_u: 系统创建的文件 unconfined_u: 用户创建的文件| system_u: 系统创建的文件 unconfined_u: 用户创建的文件| 进程相关 system_u: 系统创建的文件 unconfined_u: 用户创建的文件 object_r: 代表文件 system_u: 系统创建的文件 unconfined_u: 用户创建的文件| system_u: 系统创建的文件 unconfined_u: 用户创建的文件| 基本使用查看文件的安全上下文(SELinux进程权限)123456$ ls -Z [文件名]例：$ ls -Z /etc/hosts-rw-r--r--. root root system_u:object_r:net_conf_t:s0 hosts 文件相关修改文件所属用户和所属用户组123chown 修改所属用户chgrp 修改所属用户组chmod 修改权限]]></content>
+      <categories>
+        <category>服务器骚操作</category>
+      </categories>
+      <tags>
+        <tag>centos</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[VirtualBox+vagrant]]></title>
     <url>%2F2018%2F12%2F14%2FVirtualBox-vagrant%2F</url>
     <content type="text"><![CDATA[使用vagrant管理与操作VirtualBox VirtualBox 与 vagrant 的安装为前提，官网下载安装包或者brew安装都可 基本命令123456vagrant initvagrant upvagrant haltvagrant destroyvagrant boxvagrant plugin vagrant-scp 安装拷贝宿主机文件到虚拟机内部，可以使用vagrant插件来实现scp 安装 1vagrant plugin install vagrant-scp 使用 1vagrant scp &lt;location_file_url&gt; [vm_name]:&lt;vm_url&gt;]]></content>
