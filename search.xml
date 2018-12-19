@@ -14,7 +14,7 @@
   <entry>
     <title><![CDATA[VirtualBox安装greenplum]]></title>
     <url>%2F2018%2F12%2F19%2FVirtualBox%E5%AE%89%E8%A3%85greenplum%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[版本信息(安装环境) 操作系统: macOS Mojave; Version: 10.14.2 虚拟机: VirtualBox: V5.2.22 Vagrant: V2.2.2]]></content>
       <categories>
         <category>greenplum</category>
       </categories>
