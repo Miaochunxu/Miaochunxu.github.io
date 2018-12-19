@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="MaxBlog">
 <meta property="og:description" content="使用gpcopy迁移整个greenplum集群数据库">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-19T03:47:24.014Z">
+<meta property="og:updated_time" content="2018-12-19T08:09:13.928Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="greenplum迁移(VirtualBox)">
 <meta name="twitter:description" content="使用gpcopy迁移整个greenplum集群数据库">
@@ -396,7 +396,29 @@
       
 
       
-        
+        <h3 id="版本信息"><a href="#版本信息" class="headerlink" title="版本信息"></a>版本信息</h3><ul>
+<li>greenplum:5.14.0</li>
+<li>vagrant box: centos/7:1804.02</li>
+<li>集群一：<ul>
+<li>gpstage1(master)</li>
+<li>gpstage2</li>
+<li>gpstage3</li>
+</ul>
+</li>
+<li>集群二：<ul>
+<li>gppro1(master)</li>
+<li>gppro2</li>
+<li>gppro3</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">目标：集群一是数据源，也就是创建了数据库的greenplum集群，现在的目标是把集群一上的greenplum完全的迁移到集群二上</span><br><span class="line">注意点：保持集群二和集群一的greenplum配置信息一致。</span><br></pre></td></tr></table></figure>
+<h3 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h3><p><strong>官方文档</strong><br><a href="https://gpdb.docs.pivotal.io/590/utility_guide/admin_utilities/gpcopy.html" target="_blank" rel="noopener">https://gpdb.docs.pivotal.io/590/utility_guide/admin_utilities/gpcopy.html</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup gpcopy --source-host gpstage1 --source-port 5432 --source-user gpadmin --dest-host gppro1 --dest-port 5432 --dest-user gpadmin --full --truncate --no-distribution-check --jobs 1 --validate count &gt; gpcopy.20181219.1008.log &amp;</span><br></pre></td></tr></table></figure>
+<p><strong>简单说明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># nohup: 不间断运行命令，即使关闭窗口也没问题</span><br><span class="line"># gpcopy: 迁移指令，高版本</span><br><span class="line"># --source-host: 源数据库hostname(集群一的master节点)</span><br><span class="line"># --source-port: 源数据库端口号</span><br><span class="line"># --source-user: 源数据库用户名(greenplum安装时指定的用户)</span><br><span class="line"># --dest-host: 迁移目标数据库的hostname(集群二的master节点)</span><br><span class="line"># --dest-port: 目标数据库端口号</span><br><span class="line"># --dest-user: 目标数据库用户名，与集群一一致</span><br><span class="line"># --full: 指定迁移greenplum里所有数据库对象(其它类似迁移某个表等操作请查阅官方文档)</span><br><span class="line"># 如果遇到目标数据库中已经存在某个相同的表，可执行一下操作</span><br><span class="line">  # --skip-existing: 跳过</span><br><span class="line">  # --truncate: 清空表数据</span><br><span class="line">  # --drop: 删除表并重新创建</span><br><span class="line">  # --append: 在原来的基础上添加数据</span><br><span class="line"># --no-distribution-check: 禁用表数据分布检查</span><br><span class="line"># --jobs: 指定gpcopy并行进程数，默认为4，产生 2 * n + 1 个数据库连接(默认是9个)</span><br><span class="line"># --validate: copy之后对数据进行验证，验证类型：</span><br><span class="line">    1、count: 比较源数据库和目标数据库的行数</span><br><span class="line">    2、md5xor: 所有行MD5验证，然后对MD5执行XOR</span><br><span class="line"># &gt; ... &amp;: nohup命令 ... 打印日志的文件名; &amp; 后台运行</span><br></pre></td></tr></table></figure>
+<p><strong>使用tail指令查看gpcopy进程</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ tail -f gpcopy.20181219.1008.log</span><br></pre></td></tr></table></figure></p>
+
       
     </div>
     
@@ -486,8 +508,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -547,6 +578,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#版本信息"><span class="nav-number">1.</span> <span class="nav-text">版本信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移"><span class="nav-number">2.</span> <span class="nav-text">迁移</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

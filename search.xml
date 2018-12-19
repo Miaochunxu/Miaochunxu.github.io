@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[greenplum迁移(VirtualBox)]]></title>
     <url>%2F2018%2F12%2F19%2Fgreenplum%E8%BF%81%E7%A7%BB-VirtualBox%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[版本信息 greenplum:5.14.0 vagrant box: centos/7:1804.02 集群一： gpstage1(master) gpstage2 gpstage3 集群二： gppro1(master) gppro2 gppro3 12目标：集群一是数据源，也就是创建了数据库的greenplum集群，现在的目标是把集群一上的greenplum完全的迁移到集群二上注意点：保持集群二和集群一的greenplum配置信息一致。 迁移官方文档https://gpdb.docs.pivotal.io/590/utility_guide/admin_utilities/gpcopy.html 1nohup gpcopy --source-host gpstage1 --source-port 5432 --source-user gpadmin --dest-host gppro1 --dest-port 5432 --dest-user gpadmin --full --truncate --no-distribution-check --jobs 1 --validate count &gt; gpcopy.20181219.1008.log &amp; 简单说明 1234567891011121314151617181920# nohup: 不间断运行命令，即使关闭窗口也没问题# gpcopy: 迁移指令，高版本# --source-host: 源数据库hostname(集群一的master节点)# --source-port: 源数据库端口号# --source-user: 源数据库用户名(greenplum安装时指定的用户)# --dest-host: 迁移目标数据库的hostname(集群二的master节点)# --dest-port: 目标数据库端口号# --dest-user: 目标数据库用户名，与集群一一致# --full: 指定迁移greenplum里所有数据库对象(其它类似迁移某个表等操作请查阅官方文档)# 如果遇到目标数据库中已经存在某个相同的表，可执行一下操作 # --skip-existing: 跳过 # --truncate: 清空表数据 # --drop: 删除表并重新创建 # --append: 在原来的基础上添加数据# --no-distribution-check: 禁用表数据分布检查# --jobs: 指定gpcopy并行进程数，默认为4，产生 2 * n + 1 个数据库连接(默认是9个)# --validate: copy之后对数据进行验证，验证类型： 1、count: 比较源数据库和目标数据库的行数 2、md5xor: 所有行MD5验证，然后对MD5执行XOR# &gt; ... &amp;: nohup命令 ... 打印日志的文件名; &amp; 后台运行 使用tail指令查看gpcopy进程1$ tail -f gpcopy.20181219.1008.log]]></content>
       <categories>
         <category>greenplum</category>
       </categories>
