@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="MaxBlog">
 <meta property="og:description" content="使用gpcopy迁移整个greenplum集群数据库">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-19T08:09:13.928Z">
+<meta property="og:updated_time" content="2018-12-20T02:00:30.825Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="greenplum迁移(VirtualBox)">
 <meta name="twitter:description" content="使用gpcopy迁移整个greenplum集群数据库">
@@ -413,6 +413,19 @@
 </li>
 </ul>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">目标：集群一是数据源，也就是创建了数据库的greenplum集群，现在的目标是把集群一上的greenplum完全的迁移到集群二上</span><br><span class="line">注意点：保持集群二和集群一的greenplum配置信息一致。</span><br></pre></td></tr></table></figure>
+<h3 id="修改数据库网络配置"><a href="#修改数据库网络配置" class="headerlink" title="修改数据库网络配置"></a>修改数据库网络配置</h3><p><strong>postgres默认会阻止其它网络对其的访问和操作，所以需要添加信任网络</strong></p>
+<p><strong><em>集群一上添加信任网络方法</em></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">进入postgres安装目录，也就是greenplum安装时，master节点data所在的位置</span><br><span class="line"></span><br><span class="line">$ vi pg_hba.conf</span><br><span class="line"></span><br><span class="line">添加</span><br><span class="line">host     all         gpadmin         ipv4address/32       trust</span><br></pre></td></tr></table></figure></p>
+<p><strong>参数说明</strong></p>
+<ul>
+<li>ipv4address: 目标数据库ip地址(在集群一中配置信任集群二网络，让集群二可以访问到集群一，从而实现数据迁移操作)</li>
+<li>/32 : 完全匹配地址<ul>
+<li>例如:</li>
+<li>172.16.1.2/32 : 只有172.16.1.2是受信任的</li>
+<li>172.16.1.2/24 : 受信任的是172.16.1.1 ～ 172.16.1.255</li>
+<li>计算方式是 <code>8位.8位.8位.8位</code>/<code>相加得出结果</code></li>
+</ul>
+</li>
+</ul>
 <h3 id="迁移"><a href="#迁移" class="headerlink" title="迁移"></a>迁移</h3><p><strong>官方文档</strong><br><a href="https://gpdb.docs.pivotal.io/590/utility_guide/admin_utilities/gpcopy.html" target="_blank" rel="noopener">https://gpdb.docs.pivotal.io/590/utility_guide/admin_utilities/gpcopy.html</a></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup gpcopy --source-host gpstage1 --source-port 5432 --source-user gpadmin --dest-host gppro1 --dest-port 5432 --dest-user gpadmin --full --truncate --no-distribution-check --jobs 1 --validate count &gt; gpcopy.20181219.1008.log &amp;</span><br></pre></td></tr></table></figure>
 <p><strong>简单说明</strong></p>
@@ -457,6 +470,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/19/Linux文件与权限/" rel="prev" title="Linux文件与权限">
+                Linux文件与权限 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -533,7 +550,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -555,7 +572,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -588,7 +605,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#版本信息"><span class="nav-number">1.</span> <span class="nav-text">版本信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移"><span class="nav-number">2.</span> <span class="nav-text">迁移</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#版本信息"><span class="nav-number">1.</span> <span class="nav-text">版本信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改数据库网络配置"><span class="nav-number">2.</span> <span class="nav-text">修改数据库网络配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#迁移"><span class="nav-number">3.</span> <span class="nav-text">迁移</span></a></li></ol></div>
             
 
           </div>

@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Linux文件与权限]]></title>
+    <url>%2F2018%2F12%2F19%2FLinux%E6%96%87%E4%BB%B6%E4%B8%8E%E6%9D%83%E9%99%90%2F</url>
+    <content type="text"><![CDATA[文件相关修改文件所属用户和所属用户组123chown 修改所属用户chgrp 修改所属用户组chmod 修改权限 drwxrwxrwt 10 root root 4096 Dec 19 11:34 tmp/ --- --- ---]]></content>
+      <categories>
+        <category>服务器骚操作</category>
+      </categories>
+      <tags>
+        <tag>文件权限查看与修改</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[greenplum迁移(VirtualBox)]]></title>
     <url>%2F2018%2F12%2F19%2Fgreenplum%E8%BF%81%E7%A7%BB-VirtualBox%2F</url>
-    <content type="text"><![CDATA[版本信息 greenplum:5.14.0 vagrant box: centos/7:1804.02 集群一： gpstage1(master) gpstage2 gpstage3 集群二： gppro1(master) gppro2 gppro3 12目标：集群一是数据源，也就是创建了数据库的greenplum集群，现在的目标是把集群一上的greenplum完全的迁移到集群二上注意点：保持集群二和集群一的greenplum配置信息一致。 迁移官方文档https://gpdb.docs.pivotal.io/590/utility_guide/admin_utilities/gpcopy.html 1nohup gpcopy --source-host gpstage1 --source-port 5432 --source-user gpadmin --dest-host gppro1 --dest-port 5432 --dest-user gpadmin --full --truncate --no-distribution-check --jobs 1 --validate count &gt; gpcopy.20181219.1008.log &amp; 简单说明 1234567891011121314151617181920# nohup: 不间断运行命令，即使关闭窗口也没问题# gpcopy: 迁移指令，高版本# --source-host: 源数据库hostname(集群一的master节点)# --source-port: 源数据库端口号# --source-user: 源数据库用户名(greenplum安装时指定的用户)# --dest-host: 迁移目标数据库的hostname(集群二的master节点)# --dest-port: 目标数据库端口号# --dest-user: 目标数据库用户名，与集群一一致# --full: 指定迁移greenplum里所有数据库对象(其它类似迁移某个表等操作请查阅官方文档)# 如果遇到目标数据库中已经存在某个相同的表，可执行一下操作 # --skip-existing: 跳过 # --truncate: 清空表数据 # --drop: 删除表并重新创建 # --append: 在原来的基础上添加数据# --no-distribution-check: 禁用表数据分布检查# --jobs: 指定gpcopy并行进程数，默认为4，产生 2 * n + 1 个数据库连接(默认是9个)# --validate: copy之后对数据进行验证，验证类型： 1、count: 比较源数据库和目标数据库的行数 2、md5xor: 所有行MD5验证，然后对MD5执行XOR# &gt; ... &amp;: nohup命令 ... 打印日志的文件名; &amp; 后台运行 使用tail指令查看gpcopy进程1$ tail -f gpcopy.20181219.1008.log]]></content>
+    <content type="text"><![CDATA[版本信息 greenplum:5.14.0 vagrant box: centos/7:1804.02 集群一： gpstage1(master) gpstage2 gpstage3 集群二： gppro1(master) gppro2 gppro3 12目标：集群一是数据源，也就是创建了数据库的greenplum集群，现在的目标是把集群一上的greenplum完全的迁移到集群二上注意点：保持集群二和集群一的greenplum配置信息一致。 修改数据库网络配置postgres默认会阻止其它网络对其的访问和操作，所以需要添加信任网络 集群一上添加信任网络方法123456进入postgres安装目录，也就是greenplum安装时，master节点data所在的位置$ vi pg_hba.conf添加host all gpadmin ipv4address/32 trust 参数说明 ipv4address: 目标数据库ip地址(在集群一中配置信任集群二网络，让集群二可以访问到集群一，从而实现数据迁移操作) /32 : 完全匹配地址 例如: 172.16.1.2/32 : 只有172.16.1.2是受信任的 172.16.1.2/24 : 受信任的是172.16.1.1 ～ 172.16.1.255 计算方式是 8位.8位.8位.8位/相加得出结果 迁移官方文档https://gpdb.docs.pivotal.io/590/utility_guide/admin_utilities/gpcopy.html 1nohup gpcopy --source-host gpstage1 --source-port 5432 --source-user gpadmin --dest-host gppro1 --dest-port 5432 --dest-user gpadmin --full --truncate --no-distribution-check --jobs 1 --validate count &gt; gpcopy.20181219.1008.log &amp; 简单说明 1234567891011121314151617181920# nohup: 不间断运行命令，即使关闭窗口也没问题# gpcopy: 迁移指令，高版本# --source-host: 源数据库hostname(集群一的master节点)# --source-port: 源数据库端口号# --source-user: 源数据库用户名(greenplum安装时指定的用户)# --dest-host: 迁移目标数据库的hostname(集群二的master节点)# --dest-port: 目标数据库端口号# --dest-user: 目标数据库用户名，与集群一一致# --full: 指定迁移greenplum里所有数据库对象(其它类似迁移某个表等操作请查阅官方文档)# 如果遇到目标数据库中已经存在某个相同的表，可执行一下操作 # --skip-existing: 跳过 # --truncate: 清空表数据 # --drop: 删除表并重新创建 # --append: 在原来的基础上添加数据# --no-distribution-check: 禁用表数据分布检查# --jobs: 指定gpcopy并行进程数，默认为4，产生 2 * n + 1 个数据库连接(默认是9个)# --validate: copy之后对数据进行验证，验证类型： 1、count: 比较源数据库和目标数据库的行数 2、md5xor: 所有行MD5验证，然后对MD5执行XOR# &gt; ... &amp;: nohup命令 ... 打印日志的文件名; &amp; 后台运行 使用tail指令查看gpcopy进程1$ tail -f gpcopy.20181219.1008.log]]></content>
       <categories>
         <category>greenplum</category>
       </categories>
@@ -19,8 +30,8 @@
         <category>greenplum</category>
       </categories>
       <tags>
-        <tag>VirtualBox</tag>
         <tag>greenplum</tag>
+        <tag>VirtualBox</tag>
       </tags>
   </entry>
   <entry>
@@ -36,9 +47,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[centos相关操作]]></title>
-    <url>%2F2018%2F12%2F17%2F%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%93%8D%E4%BD%9C%2F</url>
-    <content type="text"><![CDATA[系统相关查看系统版本centos1cat /etc/redhat-release SELinux安全增强型 Linux SELinux作用SELinux 限制服务进程对资源的访问 SELinux模式(强制/宽容/关闭)12345enforcing: 强制模式。违反 SELinux 规则的行为将被阻止并记录到日志中。permissive: 宽容模式。违反 SELinux 规则的行为只会记录到日志中。一般为调试用。disabled: 关闭 SELinux。 修改模式方法123$ vi /etc/selinux/config修改 SELINUX=enforcing 为相应的模式，重启服务器生效 安全机制(文件/进程)格式：system_u:object_r:net_conf_t:s0 &nbsp; 用户(User) 角色(Role) 类型(Type) 级别(Level) 文件相关 system_u: 系统创建的文件 unconfined_u: 用户创建的文件 object_r: 代表文件 需要文件和进程类型相同，才能访问 MLS安全等级 进程相关 system_u: 系统服务进程，受管制 unconfined_u: 不受管制的进程，通常为用户自己创建的进程 system_r: 系统服务进程，受管制 unconfined_r: 不受管制的进程，通常为用户自己创建的进程 需要文件和进程类型相同，才能访问 MLS安全等级 基本使用查看文件的安全上下文(SELinux进程权限)123456$ ls -Z [文件名]例：$ ls -Z /etc/hosts-rw-r--r--. root root system_u:object_r:net_conf_t:s0 hosts centos设置ssh密码登录root用户下修改 sshd_config 文件12$ su - // 切换root用户$ vi /etc/ssh/sshd_config 修改PasswordAuthentication1#PasswordAuthentication yes // 去掉前面的#，使之生效 重启sshd服务1$ systemctl restart sshd 文件相关修改文件所属用户和所属用户组123chown 修改所属用户chgrp 修改所属用户组chmod 修改权限 drwxrwxrwt | 10 root root 4096 Dec 19 11:34 tmp/]]></content>
+    <title><![CDATA[centos安全相关操作]]></title>
+    <url>%2F2018%2F12%2F17%2Fcentos%E5%AE%89%E5%85%A8%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[系统相关查看系统版本centos1cat /etc/redhat-release SELinux安全增强型 Linux SELinux作用SELinux 限制服务进程对资源的访问 SELinux模式(强制/宽容/关闭)12345enforcing: 强制模式。违反 SELinux 规则的行为将被阻止并记录到日志中。permissive: 宽容模式。违反 SELinux 规则的行为只会记录到日志中。一般为调试用。disabled: 关闭 SELinux。 修改模式方法123$ vi /etc/selinux/config修改 SELINUX=enforcing 为相应的模式，重启服务器生效 安全机制(文件/进程)格式：system_u:object_r:net_conf_t:s0 &nbsp; 用户(User) 角色(Role) 类型(Type) 级别(Level) 文件相关 system_u: 系统创建的文件 unconfined_u: 用户创建的文件 object_r: 代表文件 需要文件和进程类型相同，才能访问 MLS安全等级 进程相关 system_u: 系统服务进程，受管制 unconfined_u: 不受管制的进程，通常为用户自己创建的进程 system_r: 系统服务进程，受管制 unconfined_r: 不受管制的进程，通常为用户自己创建的进程 需要文件和进程类型相同，才能访问 MLS安全等级 基本使用查看文件的安全上下文(SELinux进程权限)123456$ ls -Z [文件名]例：$ ls -Z /etc/hosts-rw-r--r--. root root system_u:object_r:net_conf_t:s0 hosts centos设置ssh密码登录root用户下修改 sshd_config 文件12$ su - // 切换root用户$ vi /etc/ssh/sshd_config 修改PasswordAuthentication1#PasswordAuthentication yes // 去掉前面的#，使之生效 重启sshd服务1$ systemctl restart sshd]]></content>
       <categories>
         <category>服务器骚操作</category>
       </categories>
