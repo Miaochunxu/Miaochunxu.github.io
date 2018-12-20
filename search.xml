@@ -25,7 +25,7 @@
   <entry>
     <title><![CDATA[VirtualBox安装greenplum]]></title>
     <url>%2F2018%2F12%2F19%2FVirtualBox%E5%AE%89%E8%A3%85greenplum%2F</url>
-    <content type="text"><![CDATA[版本信息(安装环境) 操作系统: macOS Mojave; Version: 10.14.2 虚拟机: VirtualBox: V5.2.22 Vagrant: V2.2.2 创建与启动虚拟机使用vagrant创建与管理虚拟机Vagrantfile12345678910111213141516171819Vagrant.configure(&quot;2&quot;) do |config| # 虚拟机系统版本 config.vm.box = &quot;centos/7&quot; config.vm.box_version = &quot;1804.02&quot; # 循环创建虚拟机 (1..3).each do |i| config.vm.define &quot;gppro#&#123;i&#125;&quot; do |gppro| gppro.vm.network &quot;public_network&quot;, ip: &quot;172.16.1.21#&#123;i&#125;&quot; gppro.vm.hostname = &quot;gppro#&#123;i&#125;&quot; end end config.vm.provider &quot;virtualbox&quot; do |v| v.memory = 2048 v.cpus = 1 endend 启动虚拟机在Vagrantfile文件所在目录下执行 1$ vagrant up 查看启动状态1$ vagrant status 安装所需依赖与修改系统配置系统配置依赖安装1yum install net-tools ntp net-tools : 网络管理 ntp : 网络时间协议，用于同步各个虚拟机的时间]]></content>
+    <content type="text"><![CDATA[版本信息(安装环境) 操作系统: macOS Mojave; Version: 10.14.2 虚拟机: VirtualBox: V5.2.22 Vagrant: V2.2.2 创建与启动虚拟机使用vagrant创建与管理虚拟机Vagrantfile 12345678910111213141516171819Vagrant.configure("2") do |config| # 虚拟机系统版本 config.vm.box = "centos/7" config.vm.box_version = "1804.02" # 循环创建虚拟机 (1..3).each do |i| config.vm.define "gppro#&#123;i&#125;" do |gppro| gppro.vm.network "public_network", ip: "172.16.1.21#&#123;i&#125;" gppro.vm.hostname = "gppro#&#123;i&#125;" end end config.vm.provider "virtualbox" do |v| v.memory = 2048 v.cpus = 1 endend 启动虚拟机在Vagrantfile文件所在目录下执行 1$ vagrant up 查看启动状态1$ vagrant status 安装所需依赖与修改系统配置系统配置依赖安装1$ yum install net-tools ntp net-tools : 网络管理 ntp : 网络时间协议，用于同步各个虚拟机的时间]]></content>
       <categories>
         <category>greenplum</category>
       </categories>
