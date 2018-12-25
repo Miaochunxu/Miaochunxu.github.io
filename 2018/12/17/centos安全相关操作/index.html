@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="MaxBlog">
 <meta property="og:description" content="记录一些Centos的操作">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-19T08:43:15.972Z">
+<meta property="og:updated_time" content="2018-12-25T02:00:30.335Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="centos安全相关操作">
 <meta name="twitter:description" content="记录一些Centos的操作">
@@ -405,9 +405,6 @@
 <table><br>  <tr><br>    <th>&nbsp;</th><br>    <th>用户(User)</th><br>    <th>角色(Role)</th><br>    <th>类型(Type)</th><br>    <th>级别(Level)</th><br>  </tr><br>  <tr><br>    <td>文件相关</td><br>    <td><br>        <font color="#fc6423"> system_u: </font> 系统创建的文件 <br><br>        <font color="#fc6423">unconfined_u: </font> 用户创建的文件<br>    </td><br>    <td><br>        <font color="#fc6423">object_r: </font> 代表文件<br>    </td><br>    <td><br>        需要文件和进程类型相同，才能访问<br>    </td><br>    <td><br>        MLS安全等级<br>    </td><br>  </tr><br>   <tr><br>    <td>进程相关</td><br>    <td><br>        <font color="#fc6423">system_u: </font> 系统服务进程，受管制 <br><br>        <font color="#fc6423">unconfined_u: </font> 不受管制的进程，通常为用户自己创建的进程<br>    </td><br>    <td><br>        <font color="#fc6423">system_r: </font> 系统服务进程，受管制 <br><br>        <font color="#fc6423">unconfined_r: </font> 不受管制的进程，通常为用户自己创建的进程<br>    </td><br>    <td><br>        需要文件和进程类型相同，才能访问<br>    </td><br>    <td><br>        MLS安全等级<br>    </td><br>  </tr><br></table>
 
 <h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><p>查看文件的安全上下文(SELinux进程权限)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ls -Z [文件名]</span><br><span class="line"></span><br><span class="line">例：</span><br><span class="line">$ ls -Z /etc/hosts</span><br><span class="line"></span><br><span class="line">-rw-r--r--. root root system_u:object_r:net_conf_t:s0  hosts</span><br></pre></td></tr></table></figure></p>
-<h3 id="centos设置ssh密码登录"><a href="#centos设置ssh密码登录" class="headerlink" title="centos设置ssh密码登录"></a>centos设置ssh密码登录</h3><p><strong>root用户下修改 sshd_config 文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ su -  // 切换root用户</span><br><span class="line">$ vi /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure></p>
-<p><strong>修改PasswordAuthentication</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#PasswordAuthentication yes // 去掉前面的#，使之生效</span><br></pre></td></tr></table></figure></p>
-<p><strong>重启sshd服务</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl restart sshd</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -527,7 +524,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -549,7 +546,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -582,7 +579,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统相关"><span class="nav-number">1.</span> <span class="nav-text">系统相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看系统版本"><span class="nav-number">1.1.</span> <span class="nav-text">查看系统版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SELinux"><span class="nav-number">1.2.</span> <span class="nav-text">SELinux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SELinux作用"><span class="nav-number">1.2.1.</span> <span class="nav-text">SELinux作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SELinux模式-强制-宽容-关闭"><span class="nav-number">1.2.2.</span> <span class="nav-text">SELinux模式(强制/宽容/关闭)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改模式方法"><span class="nav-number">1.2.3.</span> <span class="nav-text">修改模式方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全机制-文件-进程"><span class="nav-number">1.2.4.</span> <span class="nav-text">安全机制(文件/进程)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本使用"><span class="nav-number">1.2.5.</span> <span class="nav-text">基本使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#centos设置ssh密码登录"><span class="nav-number">1.3.</span> <span class="nav-text">centos设置ssh密码登录</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#系统相关"><span class="nav-number">1.</span> <span class="nav-text">系统相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看系统版本"><span class="nav-number">1.1.</span> <span class="nav-text">查看系统版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SELinux"><span class="nav-number">1.2.</span> <span class="nav-text">SELinux</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#SELinux作用"><span class="nav-number">1.2.1.</span> <span class="nav-text">SELinux作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SELinux模式-强制-宽容-关闭"><span class="nav-number">1.2.2.</span> <span class="nav-text">SELinux模式(强制/宽容/关闭)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改模式方法"><span class="nav-number">1.2.3.</span> <span class="nav-text">修改模式方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安全机制-文件-进程"><span class="nav-number">1.2.4.</span> <span class="nav-text">安全机制(文件/进程)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本使用"><span class="nav-number">1.2.5.</span> <span class="nav-text">基本使用</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="VirtualBox,greenplum,">
+  <meta name="keywords" content="greenplum,VirtualBox,">
 
 
 
@@ -87,7 +87,7 @@
 
 
 <meta name="description" content="VirtualBox下安装greenplum">
-<meta name="keywords" content="VirtualBox,greenplum">
+<meta name="keywords" content="greenplum,VirtualBox">
 <meta property="og:type" content="article">
 <meta property="og:title" content="VirtualBox安装greenplum">
 <meta property="og:url" content="http://yoursite.com/2018/12/19/VirtualBox安装greenplum/index.html">
@@ -95,7 +95,7 @@
 <meta property="og:description" content="VirtualBox下安装greenplum">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/images/vagrant-status.png">
-<meta property="og:updated_time" content="2018-12-20T06:45:23.624Z">
+<meta property="og:updated_time" content="2018-12-25T06:49:26.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="VirtualBox安装greenplum">
 <meta name="twitter:description" content="VirtualBox下安装greenplum">
@@ -413,13 +413,40 @@
 <h3 id="启动虚拟机"><a href="#启动虚拟机" class="headerlink" title="启动虚拟机"></a>启动虚拟机</h3><font color="#fc6423">在Vagrantfile文件所在目录下执行</font>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant up</span><br></pre></td></tr></table></figure>
-<p><strong>查看启动状态</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant status</span><br></pre></td></tr></table></figure></p>
+<p><strong>查看启动状态</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant status</span><br></pre></td></tr></table></figure>
 <p><img src="/images/vagrant-status.png" width="70%"></p>
-<h2 id="安装所需依赖与修改系统配置"><a href="#安装所需依赖与修改系统配置" class="headerlink" title="安装所需依赖与修改系统配置"></a>安装所需依赖与修改系统配置</h2><h3 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h3><h3 id="依赖安装"><a href="#依赖安装" class="headerlink" title="依赖安装"></a>依赖安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ yum install net-tools ntp</span><br></pre></td></tr></table></figure>
+<h2 id="安装所需依赖与修改系统配置"><a href="#安装所需依赖与修改系统配置" class="headerlink" title="安装所需依赖与修改系统配置"></a>安装所需依赖与修改系统配置</h2><h3 id="系统配置"><a href="#系统配置" class="headerlink" title="系统配置"></a>系统配置</h3><h3 id="依赖安装-master和所有segment节点"><a href="#依赖安装-master和所有segment节点" class="headerlink" title="依赖安装(master和所有segment节点)"></a>依赖安装(master和所有segment节点)</h3><p><strong>进入虚拟机</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vagrant gppro1</span><br></pre></td></tr></table></figure>
+<p><strong>所有虚拟机上在root用户下安装应用</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ su - // 进入root用户</span><br><span class="line">[root@gppro1 ~]$ yum install net-tools ntp</span><br></pre></td></tr></table></figure>
 <ul>
 <li>net-tools : 网络管理</li>
 <li>ntp : 网络时间协议，用于同步各个虚拟机的时间</li>
 </ul>
+<h3 id="修改ssh密码登录，允许密码登录-master和所有segment节点"><a href="#修改ssh密码登录，允许密码登录-master和所有segment节点" class="headerlink" title="修改ssh密码登录，允许密码登录(master和所有segment节点)"></a>修改ssh密码登录，允许密码登录(master和所有segment节点)</h3><p><strong>root用户下修改sshd_config文件</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/ssh/sshd_config</span><br><span class="line"></span><br><span class="line"><span class="comment"># PasswordAuthentication yes  // 去掉 # 打开 PasswordAuthentication</span></span><br><span class="line"></span><br><span class="line">$ systemctl restart sshd  // 重启sshd 服务</span><br></pre></td></tr></table></figure>
+<h3 id="修改安全策略-master和所有segment节点"><a href="#修改安全策略-master和所有segment节点" class="headerlink" title="修改安全策略(master和所有segment节点)"></a>修改安全策略(master和所有segment节点)</h3><ul>
+<li>禁用SELinux</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sestatus // 查看SELinux状态</span><br><span class="line">$ vi  /etc/selinux/config // 打开配置文件</span><br><span class="line"></span><br><span class="line">SELINUX=enforcing 改成 SELINUX=disabled</span><br></pre></td></tr></table></figure>
+<ul>
+<li>修改后的状态(需要reboot)：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sestatus</span><br><span class="line"></span><br><span class="line">SELinux status:                 disabled</span><br></pre></td></tr></table></figure>
+<h3 id="关闭防火墙"><a href="#关闭防火墙" class="headerlink" title="关闭防火墙"></a>关闭防火墙</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">$ systemctl status firewalld //查看防火墙状态</span><br><span class="line"></span><br><span class="line">$ systemctl stop firewalld.service // 关闭防火墙</span><br><span class="line">$ systemctl <span class="built_in">disable</span> firewalld.service // 禁止启动防火墙</span><br></pre></td></tr></table></figure>
+<ul>
+<li>reboot后查看状态：</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ systemctl status firewalld</span><br><span class="line"></span><br><span class="line">firewalld.service - firewalld - dynamic firewall daemon</span><br><span class="line">   Loaded: loaded (/usr/lib/systemd/system/firewalld.service; disabled; vendor preset: enabled)</span><br><span class="line">   Active: inactive (dead)</span><br><span class="line">     Docs: man:firewalld(1)</span><br></pre></td></tr></table></figure>
+<h2 id="GreenPlum-相关"><a href="#GreenPlum-相关" class="headerlink" title="GreenPlum 相关"></a>GreenPlum 相关</h2><h3 id="设置hosts"><a href="#设置hosts" class="headerlink" title="设置hosts"></a>设置hosts</h3><p><strong>root用户下</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/hosts</span><br><span class="line"></span><br><span class="line">172.16.1.211   gppro1</span><br><span class="line">172.16.1.212   gppro2</span><br><span class="line">172.16.1.213   gppro3</span><br></pre></td></tr></table></figure></p>
+<h3 id="修改内核参数"><a href="#修改内核参数" class="headerlink" title="修改内核参数"></a>修改内核参数</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/sysctl.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"># 指定内核所允许的最大共享内存段的大小</span><br><span class="line">kernel.shmmax = 500000000</span><br><span class="line">kernel.shmmni = 4096 //</span><br><span class="line">kernel.shmall = 4000000000</span><br><span class="line">kernel.sem = 250 512000 100 2048</span><br><span class="line">kernel.sysrq = 1</span><br><span class="line">kernel.core_uses_pid = 1</span><br><span class="line">kernel.msgmnb = 65536</span><br><span class="line">kernel.msgmax = 65536</span><br><span class="line">kernel.msgmni = 2048</span><br><span class="line">net.ipv4.tcp_syncookies = 1</span><br><span class="line">net.ipv4.conf.default.accept_source_route = 0</span><br><span class="line"></span><br><span class="line"># 表示开启TCP连接中TIME-WAIT Sockets的快速回收，默认为0，表示关闭。</span><br><span class="line">net.ipv4.tcp_tw_recycle = 1</span><br><span class="line">net.ipv4.tcp_max_syn_backlog = 4096</span><br><span class="line">net.ipv4.conf.all.arp_filter = 1</span><br><span class="line">net.ipv4.ip_local_port_range = 10000 65535</span><br><span class="line">net.core.netdev_max_backlog = 10000</span><br><span class="line">net.core.rmem_max = 2097152</span><br><span class="line">net.core.wmem_max = 2097152</span><br><span class="line">vm.overcommit_memory = 2</span><br></pre></td></tr></table></figure>
+<p><strong>重启生效</strong></p>
+<h3 id="修改件文件和进程读取数限制"><a href="#修改件文件和进程读取数限制" class="headerlink" title="修改件文件和进程读取数限制"></a>修改件文件和进程读取数限制</h3><p><strong>root 用户下</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi /etc/security/limits.conf</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 任意一个用户可以打开的最大的文件数 * 代表所有</span><br><span class="line">* soft nofile 65536</span><br><span class="line">* hard nofile 65536</span><br><span class="line"># 任意一个用户可以打开的最大的进程数 * 代表所有</span><br><span class="line">* soft nproc 131072</span><br><span class="line">* hard nproc 131072</span><br></pre></td></tr></table></figure>
+<p><strong><em>注</em></strong>: <br><br><code>hard 是阀值,超过就会报错</code> <br><br><code>soft 是警告值</code></p>
 
       
     </div>
@@ -437,9 +464,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/VirtualBox/" rel="tag"> <i class="fa fa-tag"> VirtualBox </i></a>
-          
             <a href="/tags/greenplum/" rel="tag"> <i class="fa fa-tag"> greenplum </i></a>
+          
+            <a href="/tags/VirtualBox/" rel="tag"> <i class="fa fa-tag"> VirtualBox </i></a>
           
         </div>
       
@@ -541,7 +568,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -563,7 +590,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -596,7 +623,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本信息-安装环境"><span class="nav-number">1.</span> <span class="nav-text">版本信息(安装环境)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建与启动虚拟机"><span class="nav-number">2.</span> <span class="nav-text">创建与启动虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用vagrant创建与管理虚拟机"><span class="nav-number">2.1.</span> <span class="nav-text">使用vagrant创建与管理虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动虚拟机"><span class="nav-number">2.2.</span> <span class="nav-text">启动虚拟机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装所需依赖与修改系统配置"><span class="nav-number">3.</span> <span class="nav-text">安装所需依赖与修改系统配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统配置"><span class="nav-number">3.1.</span> <span class="nav-text">系统配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖安装"><span class="nav-number">3.2.</span> <span class="nav-text">依赖安装</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本信息-安装环境"><span class="nav-number">1.</span> <span class="nav-text">版本信息(安装环境)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建与启动虚拟机"><span class="nav-number">2.</span> <span class="nav-text">创建与启动虚拟机</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#使用vagrant创建与管理虚拟机"><span class="nav-number">2.1.</span> <span class="nav-text">使用vagrant创建与管理虚拟机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#启动虚拟机"><span class="nav-number">2.2.</span> <span class="nav-text">启动虚拟机</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装所需依赖与修改系统配置"><span class="nav-number">3.</span> <span class="nav-text">安装所需依赖与修改系统配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#系统配置"><span class="nav-number">3.1.</span> <span class="nav-text">系统配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖安装-master和所有segment节点"><span class="nav-number">3.2.</span> <span class="nav-text">依赖安装(master和所有segment节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改ssh密码登录，允许密码登录-master和所有segment节点"><span class="nav-number">3.3.</span> <span class="nav-text">修改ssh密码登录，允许密码登录(master和所有segment节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改安全策略-master和所有segment节点"><span class="nav-number">3.4.</span> <span class="nav-text">修改安全策略(master和所有segment节点)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关闭防火墙"><span class="nav-number">3.5.</span> <span class="nav-text">关闭防火墙</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GreenPlum-相关"><span class="nav-number">4.</span> <span class="nav-text">GreenPlum 相关</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#设置hosts"><span class="nav-number">4.1.</span> <span class="nav-text">设置hosts</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改内核参数"><span class="nav-number">4.2.</span> <span class="nav-text">修改内核参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改件文件和进程读取数限制"><span class="nav-number">4.3.</span> <span class="nav-text">修改件文件和进程读取数限制</span></a></li></ol></li></ol></div>
             
 
           </div>
