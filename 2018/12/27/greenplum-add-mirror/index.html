@@ -95,7 +95,7 @@
 <meta property="og:description" content="greenplum通过addmirrors添加segment节点的物理镜像">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://miaochunxu.github.io/images/gpaddmirrors-o-addmirror.png">
-<meta property="og:updated_time" content="2018-12-27T07:27:30.577Z">
+<meta property="og:updated_time" content="2018-12-27T09:06:57.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="greenplum-add-mirror">
 <meta name="twitter:description" content="greenplum通过addmirrors添加segment节点的物理镜像">
@@ -407,7 +407,7 @@
 <h3 id="root用户下创建mirror文件目录"><a href="#root用户下创建mirror文件目录" class="headerlink" title="root用户下创建mirror文件目录"></a>root用户下创建mirror文件目录</h3><h4 id="新建文件夹"><a href="#新建文件夹" class="headerlink" title="新建文件夹"></a>新建文件夹</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir /data/mirror</span><br></pre></td></tr></table></figure>
 <h4 id="修改文件权限"><a href="#修改文件权限" class="headerlink" title="修改文件权限"></a>修改文件权限</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ chown gpadmin:gpadmin /data/mirror</span><br></pre></td></tr></table></figure>
 <h3 id="进入gpadmin用户"><a href="#进入gpadmin用户" class="headerlink" title="进入gpadmin用户"></a>进入gpadmin用户</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ su - gpadmin</span><br></pre></td></tr></table></figure>
-<h3 id="创建addmirror配置文件"><a href="#创建addmirror配置文件" class="headerlink" title="创建addmirror配置文件"></a>创建addmirror配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建addmirror配置文件</span></span><br><span class="line">$ gpaddmirrors -i ./addmirror</span><br></pre></td></tr></table></figure>
+<h3 id="创建addmirror配置文件"><a href="#创建addmirror配置文件" class="headerlink" title="创建addmirror配置文件"></a>创建addmirror配置文件</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建addmirror配置文件</span></span><br><span class="line">$ gpaddmirrors -o ./addmirror</span><br></pre></td></tr></table></figure>
 <p><img src="/images/gpaddmirrors-o-addmirror.png" width="80%"></p>
 <p><code>注：/data/mirror 是自己输入的mirror存储地址</code></p>
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">$</span> <span class="string">cat</span> <span class="string">addmirror</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 自动升成了一下内容(根据你安装的greenplum)</span></span><br><span class="line"><span class="string">filespaceOrder=</span></span><br><span class="line"><span class="string">mirror0=0:gppro3:7000:8000:9000:/data/mirror/gpseg0</span></span><br><span class="line"><span class="string">mirror1=1:gppro2:7000:8000:9000:/data/mirror/gpseg1</span></span><br></pre></td></tr></table></figure>
