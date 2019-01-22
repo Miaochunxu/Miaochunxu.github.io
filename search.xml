@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[zsh使用]]></title>
+    <url>%2F2019%2F01%2F22%2Fzsh%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[zsh 查看安装的shell 12$ cat /etc/shells 查看当前使用的shell 1$ echo $SHELL 切换zsh 1$ chsh -s /bin/zsh oh-my-zsh 安装 1$ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | sh 查看主题 1$ ls ~/.oh-my-zsh/themes 切换主题 123$ vi ~/.zshrc修改 ZSH_THEME="[你喜欢的主题名字]" 主题预览: Go]]></content>
+      <categories>
+        <category>服务器骚操作</category>
+      </categories>
+      <tags>
+        <tag>bash/zsh</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[注释标签(ruby)]]></title>
     <url>%2F2019%2F01%2F22%2F%E6%B3%A8%E9%87%8A%E6%A0%87%E7%AD%BE(ruby)%2F</url>
     <content type="text"><![CDATA[ruby 介绍 ruby 是html5中支持的用于文字注解的标签 ruby使用方法1234&lt;ruby&gt; 你&lt;rp&gt;(&lt;/rp&gt; &lt;rt&gt;Ni&lt;/rt&gt; &lt;rp&gt;)&lt;/rp&gt; 好&lt;rp&gt;(&lt;/rp&gt; &lt;rt&gt;Hao&lt;/rt&gt; &lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt; 你( Ni ) 好( Hao ) 解释 &lt;ruby&gt;&lt;/ruby&gt; : 根标签 &lt;rp&gt;&lt;/rp&gt; : 当浏览器不支持&lt;ruby&gt;标签的时候显示的内容 &lt;rt&gt;&lt;/rt&gt; : 注释内容]]></content>
