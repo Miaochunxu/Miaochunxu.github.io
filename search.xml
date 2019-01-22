@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[注释标签(ruby)]]></title>
+    <url>%2F2019%2F01%2F22%2F%E6%B3%A8%E9%87%8A%E6%A0%87%E7%AD%BE(ruby)%2F</url>
+    <content type="text"><![CDATA[ruby 介绍 ruby 是html5中支持的用于文字注解的标签 ruby使用方法1234&lt;ruby&gt; 你&lt;rp&gt;(&lt;/rp&gt; &lt;rt&gt;Ni&lt;/rt&gt; &lt;rp&gt;)&lt;/rp&gt; 好&lt;rp&gt;(&lt;/rp&gt; &lt;rt&gt;Hao&lt;/rt&gt; &lt;rp&gt;)&lt;/rp&gt;&lt;/ruby&gt; 你( Ni ) 好( Hao ) 解释 &lt;ruby&gt;&lt;/ruby&gt; : 根标签 &lt;rp&gt;&lt;/rp&gt; : 当浏览器不支持&lt;ruby&gt;标签的时候显示的内容 &lt;rt&gt;&lt;/rt&gt; : 注释内容]]></content>
+      <categories>
+        <category>web前端</category>
+      </categories>
+      <tags>
+        <tag>ruby</tag>
+        <tag>html</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[react学习记录]]></title>
+    <url>%2F2019%2F01%2F14%2Freact%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"></content>
+  </entry>
+  <entry>
     <title><![CDATA[greenplum-add-mirror]]></title>
     <url>%2F2018%2F12%2F27%2Fgreenplum-add-mirror%2F</url>
     <content type="text"><![CDATA[操作要求 greenplum版本: v5.14.0 操作系统: centos:7 / 1804.02 root用户下创建mirror文件目录gpssh新建文件夹1$ gpssh -f /home/gpadmin/conf/seglist -e "mkdir /data/mirror" gpssh修改文件权限1$ gpssh -f /home/gpadmin/conf/seglist -e "chown gpadmin:gpadmin /data/mirror" 进入gpadmin用户1$ su - gpadmin 创建addmirror配置文件12# 创建addmirror配置文件$ gpaddmirrors -o ./addmirror 注：/data/mirror 是自己输入的mirror存储地址 123456$ cat addmirror# 自动升成了一下内容(根据你安装的greenplum)filespaceOrder=mirror0=0:gppro3:7000:8000:9000:/data/mirror/gpseg0mirror1=1:gppro2:7000:8000:9000:/data/mirror/gpseg1 执行gpaddmirror1$ gpaddmirrors -i addmirror -v -B 1 -v:打印详细的日志信息。 -B:并行启动的镜像设置进程数量，最多10个并行 常见问题1、perl问题描述 1perl: command not found 解决办法 12# 安装perl, root用户下$ gpssh -f /home/gpadmin/conf/hostlist -e "yum install -y perl" 2、mirror已经存在问题描述 1gpaddmirrors error: GPDB physical mirroring cannot be added. The cluster is already configured with physical mirroring. 解决办法 清空mirror储存内的数据，执行remove_mirror.sh脚本(gpadmin用户下) 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859$ cat remove_mirror.sh#!/bin/bashset -echeck_health()&#123; count=$(psql -t -A -c "select count(*) from gp_segment_configuration where preferred_role &lt;&gt; role and role = 'p' and status = 'u';") if [ "$count" -eq "0" ]; then echo "Database healthy. Continuing..." else echo "ERROR! Please run gpstate and fix any segments that are down." fi&#125;start_normal()&#123; counter=$(ps -ef | grep postgres | grep "\-D" | wc -l) if [ "$counter" -eq "0" ]; then gpstart -a else echo "Database already started." fi&#125;stop_normal()&#123; counter=$(ps -ef | grep postgres | grep "\-D" | wc -l) if [ "$counter" -eq "0" ]; then echo "Database already stopped." else gpstop -a -M fast fi&#125;start_admin_mode()&#123; gpstart -m &lt;&lt; EOFyEOF&#125;alter_database()&#123; PGOPTIONS='-c gp_session_role=utility' psql -c "SET allow_system_table_mods=dml; update gp_fault_strategy set fault_strategy = 'n';" PGOPTIONS='-c gp_session_role=utility' psql -c "SET allow_system_table_mods=dml; delete from gp_segment_configuration where role = 'm';" PGOPTIONS='-c gp_session_role=utility' psql -c "SET allow_system_table_mods=dml; update gp_segment_configuration set replication_port = null;" PGOPTIONS='-c gp_session_role=utility' psql -c "SET allow_system_table_mods=dml; delete from pg_filespace_entry f where not exists (select null from gp_segment_configuration g where f.fsedbid = g.dbid);"&#125;stop_admin_mode()&#123; gpstop -m&#125;start_normalcheck_healthstop_normalstart_admin_modealter_databasestop_admin_modestart_normal 运行remove_mirror.sh 123# gpadmin用户下$ PGDATABASE=postgres bash remove_mirror.sh 重新执行gpaddmirrors]]></content>
@@ -14,7 +31,7 @@
   <entry>
     <title><![CDATA[centos-ssh-密码登录设置]]></title>
     <url>%2F2018%2F12%2F25%2Fcentos-ssh-%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E8%AE%BE%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[centos设置ssh密码登录root用户下修改 sshd_config 文件12$ su - // 切换root用户$ vi /etc/ssh/sshd_config 修改PasswordAuthentication1#PasswordAuthentication yes // 去掉前面的#，使之生效 重启sshd服务1$ systemctl restart sshd]]></content>
+    <content type="text"><![CDATA[centos 设置 ssh 密码登录root 用户下修改 sshd_config 文件 12$ su - // 切换root用户$ vi /etc/ssh/sshd_config 修改 PasswordAuthentication 1#PasswordAuthentication yes // 去掉前面的#，使之生效 重启 sshd 服务 1$ systemctl restart sshd]]></content>
       <categories>
         <category>服务器骚操作</category>
       </categories>

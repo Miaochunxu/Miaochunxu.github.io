@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://miaochunxu.github.io/2019/01/22/%E6%B3%A8%E9%87%8A%E6%A0%87%E7%AD%BE(ruby)/</loc>
+    
+    <lastmod>2019-01-22T03:08:43.322Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://miaochunxu.github.io/2018/12/25/centos-ssh-%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E8%AE%BE%E7%BD%AE/</loc>
+    
+    <lastmod>2019-01-14T09:04:37.134Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://miaochunxu.github.io/2019/01/14/react%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</loc>
+    
+    <lastmod>2019-01-14T08:11:25.693Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://miaochunxu.github.io/2018/12/27/greenplum-add-mirror/</loc>
     
     <lastmod>2018-12-28T02:23:08.572Z</lastmod>
@@ -12,13 +33,6 @@
     <loc>https://miaochunxu.github.io/2018/12/19/VirtualBox%E5%AE%89%E8%A3%85greenplum/</loc>
     
     <lastmod>2018-12-26T08:31:18.620Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://miaochunxu.github.io/2018/12/25/centos-ssh-%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E8%AE%BE%E7%BD%AE/</loc>
-    
-    <lastmod>2018-12-25T02:02:57.009Z</lastmod>
     
   </url>
   
