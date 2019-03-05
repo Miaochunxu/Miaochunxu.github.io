@@ -1,6 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[Let's Encrypt+certbot+traefik实现网站https]]></title>
+    <url>%2F2019%2F03%2F05%2FLet-s-Encrypt-certbot-traefik%E5%AE%9E%E7%8E%B0%E7%BD%91%E7%AB%99https%2F</url>
+    <content type="text"><![CDATA[安装traefik 选择版本下载 参考地址 1$ wget https://github.com/containous/traefik/releases/download/v1.7.9/traefik 添加执行权限与全局访问 12$ chmod 755 traefik$ mv traefik /usr/local/bin/ 简单配置 创建配置文件 1$ touch traefik.toml 配置信息 12345678910111213141516171819202122232425262728logLevel = "INFO"# 入口，支持http，httpsdefaultEntryPoints = ["http", "https"][entryPoints] [entryPoints.http] address = ":80" compress = true # http重定向https [entryPoints.http.redirect] entryPoint = "https" [entryPoints.https] address = ":443" compress = true #设置https证书位置 [entryPoints.https.tls] [[entryPoints.https.tls.certificates]] certFile = "/etc/letsencrypt/live/a.com/fullchain.pem" keyFile = "/etc/letsencrypt/live/a.com/privkey.pem"[web]address = ":8080"readOnly = true[file]# rulesfilename = "rules.toml"watch = true 注意： a.com 为 certbot 生成证书时的第一个-d参数 certFile 对应certbot生成的fullchain.pem目录， keyFile 对应certbot生成的privkey.pem目录， 运行1$ traefik -c traefik.toml &amp; 注：&amp; 为后台运行 关闭 查看端口 1$ ps -ef | grep traefik 关闭traefik 1$ kill -9 [端口号] 安装certbot系统: centos7 参考地址 安装yum-utils 12$ yum -y install yum-utils$ yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional certbot安装 1$ sudo yum install certbot 错误解决 1234567No module named 'requests.packages.urllib3# 解决方案# 安装urllib3# @parameter python_version: python 版本号pip install --upgrade --force-reinstall 'requests==[python version]' urllib3 使用方法(注意: 需要关闭web服务,注意证书生成与方向代理工具的https配置顺序) 1、生成证书 1$ sudo certbot certonly --standalone -d [域名1(a.com)] -d [域名2(www.a.com)] 生成的文件目录为 /etc/letsencrypt/live/a.com/(最后一个文件名字由第一个 -d 的参数决定) 2、重新生成 1$ sudo certbot renew]]></content>
+      <categories>
+        <category>服务器骚操作</category>
+      </categories>
+      <tags>
+        <tag>https申请与设置</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[wordpress错误记录]]></title>
+    <url>%2F2019%2F02%2F28%2Fwordpress%E9%94%99%E8%AF%AF%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[Http/Https 相关 错误日志 Mixed Content: The page at &#39;&lt;URL&gt;&#39; was loaded over HTTPS, but requested an insecure script &#39;&lt;URL&gt;&#39;. This request has been blocked; the content must be served over HTTPS. 解决办法 在项目根目录的wp-config.php文件中添加 123if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &amp;&amp; $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') &#123; $_SERVER['HTTPS'] = 'on';&#125;]]></content>
+      <categories>
+        <category>wordpress</category>
+      </categories>
+      <tags>
+        <tag>wordpress error</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[wordpress迁移]]></title>
+    <url>%2F2019%2F01%2F31%2Fwordpress%E8%BF%81%E7%A7%BB%2F</url>
+    <content type="text"><![CDATA[Wordpress迁移数据库迁移(mysql) 导出所有数据库(无需进入mysql) 1$ mysqldump -uroot -p --all-databases &gt; all.sql 导出特定的数据库123$ mysqldump -uroot -p --databases wordpress &gt; db.sql# &gt; 后跟目录和文件名 如：/var/mysql/db.sql]]></content>
+      <categories>
+        <category>Wordpress</category>
+      </categories>
+      <tags>
+        <tag>wordpress迁移</tag>
+        <tag>wordpress</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[centos安装git_docker_nginx]]></title>
     <url>%2F2019%2F01%2F30%2Fcentos%E5%AE%89%E8%A3%85git-docker-nginx%2F</url>
     <content type="text"><![CDATA[git 传统安装 最高到1.8.3.1 1$ yum install git docker（ce 社区版） 删除其它旧的docker安装包 12345678$ sudo yum remove docker \ docker-client \ docker-client-latest \ docker-common \ docker-latest \ docker-latest-logrotate \ docker-logrotate \ docker-engine 安装必要的依赖 123$ sudo yum install -y yum-utils \ device-mapper-persistent-data \ lvm2 添加稳定的docker源 123$ sudo yum-config-manager \ --add-repo \ https://download.docker.com/linux/centos/docker-ce.repo 安装 1$ sudo yum install docker-ce 注：安装特定版本请查看官网： https://docs.docker.com/install/linux/docker-ce/centos/ 启动服务 1$ sudo systemctl start docker 开机自动启动 1$ sudo systemctl enable docker docker-compose 安装 下载文件并放到usr/bin下 1$ sudo curl -L "https://github.com/docker/compose/releases/download/1.23.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose 修改文件权限 1$ sudo chmod +x /usr/bin/docker-compose 查看是否安装成功 1docker-compose --version nginx 官网查找对应的源信息(http://nginx.org/en/linux_packages.html#stable) 1234567891011121314151617181920$ touch /etc/yum.repos.d/nginx.repo===&gt;&gt;&gt; 写入[nginx]name=nginx repobaseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/gpgcheck=0enabled=1# 注：baseurl=http://nginx.org/packages/OS/OSRELEASE/$basearch/# 中的 OS =&gt; centos# OSRELEASE =&gt; 版本号===&gt;&gt;&gt; install# 查看$ yum info nginx# 安装$ yum install nginx]]></content>
@@ -201,7 +235,7 @@
   <entry>
     <title><![CDATA[命令行]]></title>
     <url>%2F2018%2F12%2F10%2F%E5%91%BD%E4%BB%A4%E8%A1%8C%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[网络相关网络管理工具 iproute (用来替代net-tools) ip 命令 安装 12345# centos 下安装$ yum install iproute# mac下安装$ brew install iproute2mac 使用 1234567891011121314# 版本信息ip -V# 查看IP信息$ ip addr/address# 查看详细IP信息$ ip -s addr# 查看网卡信息$ ip link / ip link show# 网卡详细信息$ ip -s link / ip -s link show enp4s0 ifconfig 安装(centos) 1$ yum install net-tools 使用 1$ ifconfig 网络管理工具12]]></content>
       <categories>
         <category>服务器骚操作</category>
       </categories>
