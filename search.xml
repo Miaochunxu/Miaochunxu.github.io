@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[wordpress通过数据库修改访问路径]]></title>
+    <url>%2F2019%2F03%2F20%2Fwordpress%E9%80%9A%E8%BF%87%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E8%AE%BF%E9%97%AE%E8%B7%AF%E5%BE%84%2F</url>
+    <content type="text"><![CDATA[查找 进入wordpress数据库 12$ mysql -u [username] -p...[password] 切换数据库 1mysql&gt; use wordpress; 查找字段 1mysql&gt; Select * from wp_options where option_name IN('siteurl','home'); 显示结果 123456+-----------+-------------+-----------------------+----------+| option_id | option_name | option_value | autoload |+-----------+-------------+-----------------------+----------+| 2 | home | http://localhost:9999 | yes || 1 | siteurl | http://localhost:9999 | yes |+-----------+-------------+-----------------------+----------+ 操作 修改字段 123mysql&gt; update wp_options set option_value='[url]' where option_name = 'siteurl';mysql&gt; update wp_options set option_value='[url]' where option_name = 'home';]]></content>
+      <categories>
+        <category>wordpress</category>
+      </categories>
+      <tags>
+        <tag>修改wordpress网站访问路径</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[wordpress-plugin-development]]></title>
+    <url>%2F2019%2F03%2F11%2Fwordpress-plugin-development%2F</url>
+    <content type="text"><![CDATA[##]]></content>
+      <categories>
+        <category>wordpress</category>
+      </categories>
+      <tags>
+        <tag>wordpress-plugin-development</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[wordpress知识点记录]]></title>
+    <url>%2F2019%2F03%2F08%2Fwordpress%E7%9F%A5%E8%AF%86%E7%82%B9%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[自定义栏目的自定义字段存储的数据库表 数据库表为 wp_postmeta 表结构为： 1234meta_id: id(自增)post_id: 文章IDmeta_key: key值meta_value: value值]]></content>
+      <categories>
+        <category>wordpress</category>
+      </categories>
+      <tags>
+        <tag>wordpress point</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Let's Encrypt+certbot+traefik实现网站https]]></title>
     <url>%2F2019%2F03%2F05%2FLet-s-Encrypt-certbot-traefik%E5%AE%9E%E7%8E%B0%E7%BD%91%E7%AB%99https%2F</url>
     <content type="text"><![CDATA[安装traefik 选择版本下载 参考地址 1$ wget https://github.com/containous/traefik/releases/download/v1.7.9/traefik 添加执行权限与全局访问 12$ chmod 755 traefik$ mv traefik /usr/local/bin/ 简单配置 创建配置文件 1$ touch traefik.toml 配置信息 12345678910111213141516171819202122232425262728logLevel = "INFO"# 入口，支持http，httpsdefaultEntryPoints = ["http", "https"][entryPoints] [entryPoints.http] address = ":80" compress = true # http重定向https [entryPoints.http.redirect] entryPoint = "https" [entryPoints.https] address = ":443" compress = true #设置https证书位置 [entryPoints.https.tls] [[entryPoints.https.tls.certificates]] certFile = "/etc/letsencrypt/live/a.com/fullchain.pem" keyFile = "/etc/letsencrypt/live/a.com/privkey.pem"[web]address = ":8080"readOnly = true[file]# rulesfilename = "rules.toml"watch = true 注意： a.com 为 certbot 生成证书时的第一个-d参数 certFile 对应certbot生成的fullchain.pem目录， keyFile 对应certbot生成的privkey.pem目录， rules.toml 创建与配置 在 traefik.toml 同一目录下创建 1$ touch rules.toml 简要配置 1234567891011[backends] [backends.backend1] [backends.backend1.servers.server1] url = "[url]"[frontends] [frontends.frontend1] passHostHeader = true backend = "backend1" [frontends.frontend1.routes.test_1] rule = "Host: a.com,www.a.com" 运行1$ traefik -c traefik.toml &amp; 注：&amp; 为后台运行 关闭 查看端口 1$ ps -ef | grep traefik 关闭traefik 1$ kill -9 [端口号] 安装certbot系统: centos7 参考地址 安装yum-utils 12$ yum -y install yum-utils$ yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional certbot安装 1$ sudo yum install certbot 错误解决 1234567No module named 'requests.packages.urllib3# 解决方案# 安装urllib3# @parameter python_version: python 版本号pip install --upgrade --force-reinstall 'requests==[python_version]' urllib3 使用方法(注意: 需要关闭web服务,注意证书生成与方向代理工具的https配置顺序) 1、生成证书 1$ sudo certbot certonly --standalone -d [域名1(a.com)] -d [域名2(www.a.com)] 生成的文件目录为 /etc/letsencrypt/live/a.com/(最后一个文件名字由第一个 -d 的参数决定) 2、重新生成 1$ sudo certbot renew wordpress https访问时http资源无法访问 wordpress项目根目录下的wp-config.php中添加以下代码注意填写位置不要为最底部 123if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) &amp;&amp; $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') &#123; $_SERVER['HTTPS'] = 'on';&#125;]]></content>
