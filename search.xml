@@ -132,7 +132,7 @@
   <entry>
     <title><![CDATA[centos-ssh-密码登录设置]]></title>
     <url>%2F2018%2F12%2F25%2Fcentos-ssh-%E5%AF%86%E7%A0%81%E7%99%BB%E5%BD%95%E8%AE%BE%E7%BD%AE%2F</url>
-    <content type="text"><![CDATA[centos 设置 ssh 密码登录root 用户下修改 sshd_config 文件 12$ su - // 切换root用户$ vi /etc/ssh/sshd_config 修改 PasswordAuthentication 1#PasswordAuthentication yes // 去掉前面的#，使之生效 重启 sshd 服务 1$ systemctl restart sshd]]></content>
+    <content type="text"><![CDATA[centos 设置 ssh 密码登录root 用户下修改 sshd_config 文件 12$ su - // 切换root用户$ vi /etc/ssh/sshd_config 修改 PasswordAuthentication(是否允许密码登录) 12345#PasswordAuthentication yes // 去掉前面的#，使之生效改成PasswordAuthentication no // 禁止密码登录 重启 sshd 服务 1$ systemctl restart sshd]]></content>
       <categories>
         <category>服务器骚操作</category>
       </categories>
