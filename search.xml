@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[wordpress Mailpoet3使用]]></title>
+    <url>%2F2019%2F07%2F02%2Fwordpress-Mailpoet3%E4%BD%BF%E7%94%A8%2F</url>
+    <content type="text"><![CDATA[前置条件 pdo_mysql 拓展 1234567891011# 查看当前的拓展php -m | grep -i 'mysql'...mysqlimysqlndpdo_mysql(是否存在?)...# 如果pdo_mysql不存在，则需要安装docker-php-ext-install pdo_mysql]]></content>
+      <categories>
+        <category>wordpress</category>
+      </categories>
+      <tags>
+        <tag>wordpress mailpoet</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[wordpress通过数据库修改访问路径]]></title>
     <url>%2F2019%2F03%2F20%2Fwordpress%E9%80%9A%E8%BF%87%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BF%AE%E6%94%B9%E8%AE%BF%E9%97%AE%E8%B7%AF%E5%BE%84%2F</url>
     <content type="text"><![CDATA[查找 进入wordpress数据库 12$ mysql -u [username] -p...[password] 切换数据库 1mysql&gt; use wordpress; 查找字段 1mysql&gt; Select * from wp_options where option_name IN('siteurl','home'); 显示结果 123456+-----------+-------------+-----------------------+----------+| option_id | option_name | option_value | autoload |+-----------+-------------+-----------------------+----------+| 2 | home | http://localhost:9999 | yes || 1 | siteurl | http://localhost:9999 | yes |+-----------+-------------+-----------------------+----------+ 操作 修改字段 123mysql&gt; update wp_options set option_value='[url]' where option_name = 'siteurl';mysql&gt; update wp_options set option_value='[url]' where option_name = 'home';]]></content>
